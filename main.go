@@ -103,7 +103,6 @@ var (
 		"PATH:LINE:MESSAGE":     `^(?P<path>[^\s][^:]+?\.go):(?P<line>\d+):\s*(?P<message>.*)$`,
 	}
 	lintersFlag = map[string]string{
-		"aligncheck":  `aligncheck .:^(?:[^:]+: )?(?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+):\s*(?P<message>.+)$`,
 		"deadcode":    `deadcode .:^deadcode: (?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+):\s*(?P<message>.*)$`,
 		"dupl":        `dupl -plumbing -threshold {duplthreshold} ./*.go:^(?P<path>[^\s][^:]+?\.go):(?P<line>\d+)-\d+:\s*(?P<message>.*)$`,
 		"errcheck":    `errcheck -abspath .:^(?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+)\t(?P<message>.*)$`,
@@ -113,23 +112,18 @@ var (
 		"golint":      "golint -min_confidence {min_confidence} .:PATH:LINE:COL:MESSAGE",
 		"gotype":      "gotype -e {tests=-a} .:PATH:LINE:COL:MESSAGE",
 		"ineffassign": `ineffassign -n .:PATH:LINE:COL:MESSAGE`,
-		"interfacer":  `interfacer ./:PATH:LINE:COL:MESSAGE`,
-		"structcheck": `structcheck {tests=-t} .:^(?:[^:]+: )?(?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+):\s*(?P<message>.+)$`,
 		"test":        `go test:^--- FAIL: .*$\s+(?P<path>[^:]+):(?P<line>\d+): (?P<message>.*)$`,
 		"testify":     `go test:Location:\s+(?P<path>[^:]+):(?P<line>\d+)$\s+Error:\s+(?P<message>[^\n]+)`,
-		"varcheck":    `varcheck .:^(?:[^:]+: )?(?P<path>[^:]+):(?P<line>\d+):(?P<col>\d+):\s*(?P<message>\w+)$`,
 		"vet":         "go tool vet ./*.go:PATH:LINE:MESSAGE",
 		"vetshadow":   "go tool vet --shadow ./*.go:PATH:LINE:MESSAGE",
 	}
 	disabledLinters           = []string{"testify", "test", "gofmt", "goimports"}
 	enabledLinters            = []string{}
 	linterMessageOverrideFlag = map[string]string{
-		"errcheck":    "error return value not checked ({message})",
-		"varcheck":    "unused global variable {message}",
-		"structcheck": "unused struct field {message}",
-		"gocyclo":     "cyclomatic complexity {cyclo} of function {function}() is high (> {mincyclo})",
-		"gofmt":       "file is not gofmted",
-		"goimports":   "file is not goimported",
+		"errcheck":  "error return value not checked ({message})",
+		"gocyclo":   "cyclomatic complexity {cyclo} of function {function}() is high (> {mincyclo})",
+		"gofmt":     "file is not gofmted",
+		"goimports": "file is not goimported",
 	}
 	linterSeverityFlag = map[string]string{
 		"gotype":  "error",
@@ -143,16 +137,12 @@ var (
 		"gotype":       "golang.org/x/tools/cmd/gotype",
 		"goimports":    "golang.org/x/tools/cmd/goimports",
 		"errcheck":     "github.com/kisielk/errcheck",
-		"varcheck":     "github.com/opennota/check/cmd/varcheck",
-		"structcheck":  "github.com/opennota/check/cmd/structcheck",
-		"aligncheck":   "github.com/opennota/check/cmd/aligncheck",
 		"deadcode":     "github.com/tsenart/deadcode",
 		"gocyclo":      "github.com/alecthomas/gocyclo",
 		"ineffassign":  "github.com/gordonklaus/ineffassign",
 		"dupl":         "github.com/mibk/dupl",
-		"interfacer":   "github.com/mvdan/interfacer/cmd/interfacer",
 	}
-	slowLinters = []string{"structcheck", "varcheck", "errcheck", "aligncheck", "testify", "test", "interfacer"}
+	slowLinters = []string{"errcheck", "testify", "test"}
 	sortKeys    = []string{"none", "path", "line", "column", "severity", "message", "linter"}
 
 	pathsArg          = kingpin.Arg("path", "Directory to lint. Defaults to \".\". <path>/... will recurse.").Strings()
