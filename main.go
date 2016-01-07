@@ -132,15 +132,14 @@ var (
 		"vet":     "error",
 	}
 	installMap = map[string]string{
-		"gometalinter": "github.com/alecthomas/gometalinter",
-		"golint":       "github.com/golang/lint/golint",
-		"gotype":       "golang.org/x/tools/cmd/gotype",
-		"goimports":    "golang.org/x/tools/cmd/goimports",
-		"errcheck":     "github.com/kisielk/errcheck",
-		"deadcode":     "github.com/tsenart/deadcode",
-		"gocyclo":      "github.com/alecthomas/gocyclo",
-		"ineffassign":  "github.com/gordonklaus/ineffassign",
-		"dupl":         "github.com/mibk/dupl",
+		"golint":      "github.com/golang/lint/golint",
+		"gotype":      "golang.org/x/tools/cmd/gotype",
+		"goimports":   "golang.org/x/tools/cmd/goimports",
+		"errcheck":    "github.com/kisielk/errcheck",
+		"deadcode":    "github.com/tsenart/deadcode",
+		"gocyclo":     "github.com/alecthomas/gocyclo",
+		"ineffassign": "github.com/gordonklaus/ineffassign",
+		"dupl":        "github.com/mibk/dupl",
 	}
 	slowLinters = []string{"errcheck", "testify", "test"}
 	sortKeys    = []string{"none", "path", "line", "column", "severity", "message", "linter"}
